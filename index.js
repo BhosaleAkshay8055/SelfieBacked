@@ -17,14 +17,14 @@ const axios = require("axios");
 require("dotenv").config();
 ////////////////////////////////
 // Import the Twilio library for sent  message
-const twilio = require("twilio");
+// const twilio = require("twilio");
 
 // Twilio credentials from the Twilio Console
-const accountSid = process.env.ACCOUNT_SID; // Replace with your Account SID
-const authToken = process.env.AUTHTOKEN; // Replace with your Auth Token
+// const accountSid = process.env.ACCOUNT_SID; // Replace with your Account SID
+// const authToken = process.env.AUTHTOKEN; // Replace with your Auth Token
 
 // Initialize the Twilio client
-const client = new twilio(accountSid, authToken);
+// const client = new twilio(accountSid, authToken);
 ///////////////////////////////////////
 
 const app = express();
