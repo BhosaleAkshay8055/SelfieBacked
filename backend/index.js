@@ -39,19 +39,19 @@ app.use(
 );
 // app.use(cors(corsOptions));
 
-app.use(express.json({ limit: "100mb" }));
+app.use(express.json({ limit: "300mb" })); // 300 md on live server and local 100 mb
 /////////////////////////
 app.use(
   express.urlencoded({
-    limit: "100mb",
+    limit: "300mb",  // 300 md on live server and local 100 mb
     extended: true,
   })
 );
 
 Cashfree.XClientId = process.env.CLIENT_ID;
 Cashfree.XClientSecret = process.env.CLIENT_SECRET;
-Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
-// Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
+// Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
+Cashfree.XEnvironment = Cashfree.Environment.PRODUCTION;
 
 // ---------------------------- database start ---------------------------------------------
 
@@ -279,7 +279,9 @@ app.post("/api/addDataInDatabase", async (req, res) => {
 });
 
 // Define the folder where your media files are stored
-const mediaFolderPath = path.join("C:/web");
+// const mediaFolderPath = path.join("C:/web"); // local
+
+const mediaFolderPath = path.join(__dirname, "video"); // This will be /home/eyelike/node-backend/images
 
 // Endpoint to serve a random media file
 app.get("/api/media/:filename", (req, res) => {
@@ -300,6 +302,7 @@ app.get("/api/media/:filename", (req, res) => {
 // Endpoint to check availability
 app.get("/api/check-availability", async (req, res) => {
   const { user_selected_date, user_selected_time } = req.query;
+  console.log(`Checking availability for ${user_selected_date, user_selected_time}`)
 
   try {
     // Query to count how many users have already booked the slot
@@ -369,6 +372,10 @@ app.post("/api/test", (req, res) => {
 app.use((req, res) => {
   res.status(404).send("Not Found");
 });
+
+
+// Serve static files from 'media' directory  // on server only
+app.use('/api/media', express.static(path.join(__dirname, 'media')));
 
 // Start the server
 server.listen(3000, () => {
